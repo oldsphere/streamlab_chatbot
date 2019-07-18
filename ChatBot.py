@@ -43,12 +43,10 @@ class ChatbotParent():
             cmdName += '_%i' % userId
         return cmdName
 
-    def AddCooldown(self, scriptName, command, seconds):
-        cmdName = self._composeCmdName(scriptName, command)
+    def _AddCooldown(self, cmdName, seconds):
         self._cooldown[cmdName] = CmdCooldown(seconds)
 
-    def IsOnCooldown(self, scriptName, command):
-        cmdName = self._composeCmdName(scriptName, command)
+    def _IsOnCooldown(self, cmdName):
         if cmdName in self._cooldown.keys():
             if not self._cooldown[cmdName].isActive():
                 del self._cooldown[cmdName]
@@ -56,34 +54,37 @@ class ChatbotParent():
             return True
         return False
 
-    def GetCooldownDuration(self, scriptName, command):
+    def _GetCooldownDuration(self, cmdName):
         cmdName = self._composeCmdName(scriptName, command)
         if cmdName in self._cooldown.keys():
             if not self._cooldown[cmdName].isActive():
                 del self._cooldown[cmdName]
                 return 0
         return self._cooldown[cmdName].GetRemainingTime()
+
+    def AddCooldown(self, scriptName, command, duration):
+        cmdName = self._composeCmdName(scriptName, command)
+        self._AddCooldown(cmdName, duration)
+
+    def IsOnCooldown(self, scriptName, command, duration):
+        cmdName = self._composeCmdName(scriptName, command)
+        self._IsOnCooldown(cmdName)
+
+    def GetCooldownDuration(self, scriptName, command, duration):
+        cmdName = self._composeCmdName(scriptName, command)
+        self._GetCooldownDuration(cmdName)
 
     def AddUserCooldown(self,scriptName, command, userId, duration):
         cmdName = self._composeCmdName(scriptName, command, userId)
-        self._cooldown[cmdName] = CmdCooldown(seconds)
+        self._AddCooldown(cmdName, duration)
 
     def IsOnUserCooldown(self,scriptName, command, userId):
         cmdName = self._composeCmdName(scriptName, command, userId)
-        if cmdName in self._cooldown.keys():
-            if not self._cooldown[cmdName].isActive():
-                del self._cooldown[cmdName]
-                return False
-            return True
-        return False
+        self._IsOnCooldown(cmdName)
 
     def GetUserCooldownDuration(self,scriptName, command, userId):
         cmdName = self._composeCmdName(scriptName, command, userId)
-        if cmdName in self._cooldown.keys():
-            if not self._cooldown[cmdName].isActive():
-                del self._cooldown[cmdName]
-                return 0
-        return self._cooldown[cmdName].GetRemainingTime()
+        self._GetCooldownDuration(cmdName)
 
 
 class CmdCooldown:

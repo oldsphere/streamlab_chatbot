@@ -8,7 +8,6 @@ import random
 import datetime
 
 class ChatbotParent():
-
     def __init__(self):
         self._cooldown = dict()
 

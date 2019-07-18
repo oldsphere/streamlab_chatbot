@@ -55,7 +55,6 @@ class ChatbotParent():
         return False
 
     def _GetCooldownDuration(self, cmdName):
-        cmdName = self._composeCmdName(scriptName, command)
         if cmdName in self._cooldown.keys():
             if not self._cooldown[cmdName].isActive():
                 del self._cooldown[cmdName]
@@ -66,13 +65,13 @@ class ChatbotParent():
         cmdName = self._composeCmdName(scriptName, command)
         self._AddCooldown(cmdName, duration)
 
-    def IsOnCooldown(self, scriptName, command, duration):
+    def IsOnCooldown(self, scriptName, command):
         cmdName = self._composeCmdName(scriptName, command)
-        self._IsOnCooldown(cmdName)
+        return self._IsOnCooldown(cmdName)
 
-    def GetCooldownDuration(self, scriptName, command, duration):
+    def GetCooldownDuration(self, scriptName, command):
         cmdName = self._composeCmdName(scriptName, command)
-        self._GetCooldownDuration(cmdName)
+        return self._GetCooldownDuration(cmdName)
 
     def AddUserCooldown(self,scriptName, command, userId, duration):
         cmdName = self._composeCmdName(scriptName, command, userId)
@@ -80,11 +79,11 @@ class ChatbotParent():
 
     def IsOnUserCooldown(self,scriptName, command, userId):
         cmdName = self._composeCmdName(scriptName, command, userId)
-        self._IsOnCooldown(cmdName)
+        return self._IsOnCooldown(cmdName)
 
     def GetUserCooldownDuration(self,scriptName, command, userId):
         cmdName = self._composeCmdName(scriptName, command, userId)
-        self._GetCooldownDuration(cmdName)
+        return self._GetCooldownDuration(cmdName)
 
 
 class CmdCooldown:

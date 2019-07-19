@@ -2,6 +2,12 @@ from Chatbot import ChatbotParent, DataParser
 import os
 import sys
 
+try:
+    input = raw_input
+except NameError:
+    pass
+
+
 class ChatRoom:
 
     def __init__(self):

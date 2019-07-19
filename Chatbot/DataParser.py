@@ -2,8 +2,8 @@ import re
 
 class DataParser():
     def __init__(self, data_dict={}):
-        self.User = data_dict.get('User')
-        self.UserId = data_dict.get('UserId')
+        self.UserName = data_dict.get('User')
+        self.User = data_dict.get('UserId')
         self.Message = data_dict.get('Message')
         self.RawData = data_dict.get('RawData')
         self.ServiceType = data_dict.get('ServiceType', 'Twitch')
@@ -42,9 +42,3 @@ class DataParser():
             'isWhisper' : True if whisperMatch else False
         }
         return DataParser(data)
-
-if __name__ == '__main__':
-
-    d0 = Data.parse_data('usuario: /w Chatbot esto es un mensaje!!')
-    d1 = Data.parse_data('usuario: esto es un mensaje!!')
-

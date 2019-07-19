@@ -15,9 +15,11 @@ def Init():
 
 def Execute(data):
     Parent.Log('Test', 'Data Received')
-    Parent.Log('Test', '    UserName: %s' % data.User)
-    Parent.Log('Test', '    UserId: %s' % data.UserId)
+    Parent.Log('Test', '    UserName: %s' % data.UserName)
+    Parent.Log('Test', '    UserId: %s' % data.User)
     Parent.Log('Test', '    Message: %s' % data.Message)
+    Parent.Log('Test', '    Points: %i' % Parent.GetPoints(data.User))
+    print('')
 
 
 def Tick():

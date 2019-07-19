@@ -35,7 +35,7 @@ class ChatbotParent():
     # Main methods
 
     def GetUserName(self, userID):
-        self._userDB.GetUserName(userID)
+        return self._userDB.GetUserName(userID)
 
     def GetUserId(self, username):
         userID = self._userDB.GetUserID(username)
@@ -127,6 +127,8 @@ class ChatbotParent():
     # Checking permissions
     def HasPermission(self, userId, permission, info):
         permission_list = self._permission.get(permission,  [])
+        if permission == 'Everyone':
+            return True
         return self.GetUserName(userId) in permission_list
 
 
@@ -171,7 +173,7 @@ class Bank:
     def RemovePoints(self, user, amount):
         self.AddPoints(user, -amount)
 
-    def GetPoints(user):
+    def GetPoints(self, user):
         return self._data.get(user, 0)
 
 
@@ -179,7 +181,7 @@ class UserDB:
     def __init__(self, data={}):
         self._data = data
 
-    def GetUsername(self, userID):
+    def GetUserName(self, userID):
         return self._data.get(userID, '')
 
     def GetUserID(self, username):

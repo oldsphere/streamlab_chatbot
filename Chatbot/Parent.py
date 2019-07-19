@@ -10,14 +10,13 @@ import datetime
 class ChatbotParent():
     def __init__(self):
         self._cooldown = dict()
+        self._name = 'ChatBot'
 
-    @staticmethod
-    def SendStreamMessage(message):
-        print('> ' + message)
+    def SendStreamMessage(self, message):
+        print(self._name +': ' + message)
 
-    @staticmethod
-    def SendStreamWhisper(target, message):
-        print(target + '> ' + message)
+    def SendStreamWhisper(self, target, message):
+        print(self._name + ':' + '\w %s %s' % (target, message))
 
     @staticmethod
     def GetRandom(min_v, max_v):
@@ -99,6 +98,4 @@ class CmdCooldown:
 
     def GetRemainingTime(self):
         return (self._end - self.now()).seconds
-
-Parent = ChatbotParent()
 

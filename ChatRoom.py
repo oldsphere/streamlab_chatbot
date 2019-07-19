@@ -30,6 +30,7 @@ class ChatRoom:
                 raw_line = input()
                 if raw_line.strip():
                     Data = DataParser.parse_data(raw_line)
+                    Data.UserId = Parent.GetUserId(Data.User)
                     [script.Execute(Data) for script in self._scripts]
                 else:
                     [script.Tick() for script in self._scripts]

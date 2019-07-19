@@ -9,10 +9,10 @@ class DataParser():
         self.ServiceType = data_dict.get('ServiceType', 'Twitch')
         self._isWhisper = data_dict.get('isWhisper', False)
 
-    def isWhisper(self):
+    def IsWhisper(self):
         return self._isWhisper
 
-    def isChatMessage(self):
+    def IsChatMessage(self):
         return not self._isWhisper
 
     def GetParam(self, n):

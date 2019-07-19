@@ -12,12 +12,16 @@ class ChatbotParent():
         self._cooldown = dict()
         self._name = 'ChatBot'
         self._type = stream_type
+        self._isLive = True
 
         # Auxiliar methods
         self._bank = Bank()
         self._userDB = UserDB()
         self._permissions = {}
 
+
+    def set_live(self, live):
+        self._isLive = live
 
     def set_bank(self, bank_dict):
         ''' Set the bank account to a fixed value '''
@@ -33,6 +37,9 @@ class ChatbotParent():
 
 
     # Main methods
+
+    def IsLive(self):
+        return self._isLive
 
     def GetUserName(self, userID):
         return self._userDB.GetUserName(userID)
@@ -97,7 +104,8 @@ class ChatbotParent():
             if not self._cooldown[cmdName].isActive():
                 del self._cooldown[cmdName]
                 return 0
-        return self._cooldown[cmdName].GetRemainingTime()
+            return self._cooldown[cmdName].GetRemainingTime()
+        return 0
 
     def AddCooldown(self, scriptName, command, duration):
         cmdName = self._composeCmdName(scriptName, command)
@@ -126,9 +134,9 @@ class ChatbotParent():
 
     # Checking permissions
     def HasPermission(self, userId, permission, info):
-        permission_list = self._permission.get(permission,  [])
         if permission == 'Everyone':
             return True
+        permission_list = self._permissions.get(permission,  [])
         return self.GetUserName(userId) in permission_list
 
 
@@ -142,6 +150,8 @@ class ChatbotParent():
     def GetPoints(self, userId):
         return self._bank.GetPoints(self.GetUserName(userId))
 
+    def GetCurrencyName(self):
+        return self._bank.currencyName
 
 
 class CmdCooldown:
@@ -163,6 +173,7 @@ class CmdCooldown:
 class Bank:
     def __init__(self, data={}):
         self._data = data
+        self.currencyName = 'dollar'
 
     def AddPoints(self, user, amount):
         if user in self._data.keys():

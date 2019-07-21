@@ -38,6 +38,5 @@ chat.set_Parent(Parent)
 chat.set_scriptFolder('scripts')
 chat.LocateScripts()
 
-
 # Run the chatroom
 chat.run()

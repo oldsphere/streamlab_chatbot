@@ -22,7 +22,6 @@ class ChatRoom:
         ''' Asign Parent Object '''
         self._Parent = parent
 
-
     def AddScript(self, script):
         mod = __import__(script)
         mod.__dict__['Parent'] = self._Parent
